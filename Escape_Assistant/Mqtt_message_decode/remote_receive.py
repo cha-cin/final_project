@@ -35,48 +35,17 @@ PASSWORD = "raspberry"
 
 state = 0
 
-def sub_cb(topic, msg):
-    global state
-    #print((topic, msg))
-    #msg is bytes
-    msg_decode=str(msg,'utf-8')
-    print(msg_decode)
-    #print(type(msg_decode))
-    
-    str2 = ''
-    i=0
-    while i < len(msg_decode):
-        if msg_decode[i] is '\\':
-            if msg_decode[i+1] is 'n':
-                str2 = str2+'\n'
-                i=i+2
-            elif msg_decode[i+1] is 't':
-                str2 = str2+'\t'
-                i=i+2
-            else:
-                i=i+1
-        else:
-            str2 = str2+msg_decode[i]
-            i=i+1
-        print(str2)
-        f = open('new_excute.py', 'w')
-        f.write(str2)
-        f.close()
     
 def main(server=SERVER):
     c = MQTTClient(CLIENT_ID, server, PORT_NO, USERNAME, PASSWORD, 60)
     # Subscribed messages will be delivered to this callback
-    c.set_callback(sub_cb)
+    
     c.connect()
-    c.subscribe(TOPIC)
-    print("Connected to %s, subscribed to %s topic" % (server, TOPIC))
+    c.publish(TOPIC,'hello fire1')
+    print("Connected to %s, publish to %s topic" % (server, TOPIC))
 
-    try:
-        while 1:
-            #micropython.mem_info()
-            c.wait_msg()
-    finally:
-        c.disconnect()
+    
+    c.disconnect()
 
 if __name__ == '__main__':
 #    load_config()
