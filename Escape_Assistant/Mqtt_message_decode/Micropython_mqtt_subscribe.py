@@ -2,12 +2,14 @@ from umqtt.simple import MQTTClient
 import ubinascii
 import machine
 import micropython
+import main2
+import time
 
 
 def do_connect():
     import network
 
-    SSID = 'Mster'
+    SSID = 'Master'
     PASSWORD = 'rty91119'
 
     sta_if = network.WLAN(network.STA_IF)
@@ -58,11 +60,12 @@ def sub_cb(topic, msg):
         else:
             str2 = str2+msg_decode[i]
             i=i+1
-        print(str2)
-        f = open('new_excute.py', 'w')
-        f.write(str2)
-        f.close()
-    
+    print("str2")
+    print(str2)
+    f = open('main.py', 'w')
+    f.write(str2)
+    f.close()
+
 def main(server=SERVER):
     c = MQTTClient(CLIENT_ID, server, PORT_NO, USERNAME, PASSWORD, 60)
     # Subscribed messages will be delivered to this callback
@@ -70,14 +73,22 @@ def main(server=SERVER):
     c.connect()
     c.subscribe(TOPIC)
     print("Connected to %s, subscribed to %s topic" % (server, TOPIC))
-
-    try:
-        while 1:
-            #micropython.mem_info()
-            c.wait_msg()
-    finally:
-        c.disconnect()
-
+    
+    while(True):
+        try:
+            while 1:
+                #micropython.mem_info()
+                c.wait_msg()
+                
+        finally:
+            print("finish!!!")
+            time.sleep(2)
+            machine.reset()
+            
+    c.disconnect()
+    
+	
+    #c.disconnect()
 if __name__ == '__main__':
 #    load_config()
 #    setup_pins()
