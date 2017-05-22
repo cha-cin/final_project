@@ -54,7 +54,7 @@
 		
 		print(Row, Col)
 		
-		if (self.Matrix[Row][Col] == 100):
+		if (self.Matrix[Row][Col] == 1000 or self.Matrix[Row][Col] == 990 or self.Matrix[Row][Col] == 980 or self.Matrix[Row][Col] == 970 or self.Matrix[Row][Col] == 960):
 			return "sueccess"
 		
 		if (Row - 1) >= 0 and (Col - 1) >= 0:
@@ -523,7 +523,7 @@
 			else:
 				return 0
 			
-			
+		
 		else:
 			if (list.index(maxPower)) == 0:
 				return self.escapePath(Row - 1, Col - 1)
@@ -545,11 +545,14 @@
 				
 			elif (list.index(maxPower)) == 6:
 				return self.escapePath(Row + 1, Col)
-				
+			
 			elif (list.index(maxPower)) == 7:
 				return self.escapePath(Row + 1, Col + 1)
 			else:
 				return 0
+		
+		
+		
 		
 	def moveOne(self, Row, Col):
 
@@ -585,9 +588,9 @@
 	
 	
 			
-a = FireEscape(4, 6)
+a = FireEscape(5, 6)
 a.exitMatrix(1)
-a.fireMatrix(3)
+a.fireMatrix(4)
 #a.smokeMatrix(1)
-a.escapePath(3, 4)
+a.escapePath(3, 3)
 print(a.Matrix)
