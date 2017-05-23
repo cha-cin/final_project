@@ -2,7 +2,6 @@ from umqtt.simple import MQTTClient
 import ubinascii
 import machine
 import micropython
-import main2
 import time
 
 
@@ -60,7 +59,7 @@ def sub_cb(topic, msg):
         else:
             str2 = str2+msg_decode[i]
             i=i+1
-    print("str2")
+    
     print(str2)
     f = open('main.py', 'w')
     f.write(str2)
