@@ -4,7 +4,7 @@ import machine
 import micropython
 import time
 import decode
-
+import mqtt_fire
 
 def do_connect():
 	import network
@@ -53,7 +53,7 @@ def main(server=SERVER):
 	c.connect()
 	c.subscribe(TOPIC)
 	print("Connected to %s, subscribed to %s topic" % (server, TOPIC))
-
+	mqtt_fire.publish_fire()
 	while(True):
 		try:
 			while 1:
