@@ -30,7 +30,8 @@ def do_connect():
 # Default MQTT server to connect to
 SERVER = "192.168.2.200"
 CLIENT_ID = ubinascii.hexlify(machine.unique_id())
-TOPIC = b"fire2"
+TOPIC = b"thirteen"
+TOPIC_Publish = b"One"
 PORT_NO = 1883     #change to mqtt port no.
 USERNAME = "pi"
 PASSWORD = "raspberry"
@@ -53,24 +54,25 @@ def main(server=SERVER):
     # Subscribed messages will be delivered to this callback
     c.set_callback(sub_cb)
     c.connect()
-    c.publish(TOPIC,'20')
+    c.publish(TOPIC_Publish,'1')
     c.subscribe(TOPIC)
     print("Connected to %s, subscribed to %s topic" % (server, TOPIC))
     execute.open()
-    while(True):
-        try:
-            while 1:
-                #micropython.mem_info()
-                c.wait_msg()
-                
-        finally:
-            print("finish!!!")
-            time.sleep(2)
-            machine.reset()
-            
-    c.disconnect()
     
-	
+    try:
+        while 1:
+            #micropython.mem_info()
+            c.wait_msg()
+            print("finish!!!")
+            time.sleep(1)
+            machine.reset()
+
+    finally:
+        print("finish!!!")
+        time.sleep(1)
+        machine.reset()
+    c.disconnect()
+
     #c.disconnect()
 if __name__ == '__main__':
 #    load_config()
